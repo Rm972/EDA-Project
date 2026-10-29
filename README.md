@@ -7,7 +7,7 @@
 ## 📁 Project Structure
 
 ```
-gaming_dashboard/
+EDA-Project/
 ├── app.py                    # Entry point: data loading, sidebar filters, page navigation
 ├── requirements.txt
 ├── README.md
@@ -40,6 +40,10 @@ gaming_dashboard/
 - **Original data:** Sauter & Draschkow (2017), published on the [Open Science Framework](https://osf.io/vnbxk/)
 - **Size:** 13,464 participants aged 18+, 55 columns → **12,668 players** after cleaning
 - **Scales:** GAD-7 anxiety (0–21), Satisfaction With Life (5–35), Social Phobia Inventory (0–68)
+
+**Why I chose this dataset:** It is a large real survey (13,464 people) that uses validated psychological scales, and I wanted to understand whether gaming is really linked to mental health.
+
+**What I expected:** I expected that players who play more hours would have higher anxiety and social phobia and lower life satisfaction.
 
 **Definition used in this project:** a player is classified as **addicted** if they play **40+ hours per week** (a full-time job). This is an analytical label, **not a medical diagnosis**.
 
@@ -75,7 +79,7 @@ The column descriptions on Kaggle were not always clear, so I used the original 
 - **But gaming hours are only weakly related to mental health (|r| ≤ 0.13).**
 - **Why** and **with whom** people play matter more: players who play **for fun** and **with real-life friends** have better scores, while players who play **to relax** or **alone** have worse scores.
 
-All numbers in the dashboard are calculated from the data when the app runs; none are typed in by hand.
+My result was different from what I expected: the **reason for playing** and **who you play with** mattered more than the **number of hours**.
 
 ## ✅ Checking My Results Against Published Research
 
@@ -86,19 +90,13 @@ My analysis showed that gaming **hours** have only a **weak** relationship with 
 ## 🚀 Run the Dashboard Locally
 
 1. Install **Python 3.10 or newer** from [python.org](https://www.python.org/downloads/) (tick *Add python.exe to PATH* on Windows).
-2. Open a terminal **inside the `gaming_dashboard` folder**.
-3. (Optional) create a virtual environment:
-   ```
-   python -m venv .venv
-   .venv\Scripts\activate        # Windows
-   source .venv/bin/activate     # macOS / Linux
-   ```
-4. Install the libraries:
+2. Open a terminal **inside the project folder**.
+3. Install the libraries:
    ```
    pip install -r requirements.txt
    ```
    On Windows, if `pip` is not recognised, use `py -m pip install -r requirements.txt`.
-5. Start the app:
+4. Start the app:
    ```
    streamlit run app.py
    ```
@@ -106,58 +104,45 @@ My analysis showed that gaming **hours** have only a **weak** relationship with 
 
 The app reads the **raw** file `data/GamingStudy_data.csv` and applies the notebook's cleaning steps itself, so the notebook and the dashboard always use the same data.
 
+**Dashboard pages:** Overview · Explore the Data · Gaming Addiction · Mental Health · Habits & Mental Health · Findings & Limitations. Use the sidebar filters to explore any group; every chart shows the number of players behind it.
+
 ---
 
 ## ☁️ Deploy to Streamlit Community Cloud
 
-1. Upload the whole `gaming_dashboard` folder to a **public GitHub repository**, keeping the same structure. Make sure `data/GamingStudy_data.csv` (4 MB) and the hidden `.streamlit/` folder are included.
-2. Go to [share.streamlit.io](https://share.streamlit.io) and sign in with GitHub.
-3. Click **Create app** → **Deploy a public app from GitHub**.
-4. Choose your repository and branch, and set **Main file path** to `app.py` (or `gaming_dashboard/app.py` if the folder is inside the repository).
-5. Click **Deploy**. Streamlit installs `requirements.txt` automatically. You get a public link you can share or open during the presentation.
-
----
-
-## 🧪 Testing Checklist
-
-| Area | Test | Expected result |
-|---|---|---|
-| Missing file | Rename `data/GamingStudy_data.csv` and reload | Friendly message telling you where to put the file |
-| Wrong file | Use a CSV without `SPIN_T` | Message listing the missing columns |
-| Metrics | Open Overview with no filters | 12,668 participants · 21.5 average hours · 11.1% addicted |
-| Notebook match | Compare with the notebook | Same values (e.g. Unemployed 22.7%, median anxiety 5 vs 4) |
-| Filters | Select *Work status = Unemployed* | Overview shows 1,299 players and 22.7% addicted |
-| Comparison charts | Keep *Unemployed* selected, open Gaming Addiction | The Work chart still shows all four groups (its own filter is ignored, and the caption says so) |
-| Small groups | Select *Education = PhD* and *Age group = 31+* | Warning that fewer than 30 players are selected; grey bars for small groups |
-| Empty result | Remove every option from *Gender* | Every page shows "No players match the current filters" |
-| One group only | Filter to a group with no addicted players | Mental Health page explains it cannot compare |
-| Reset | Change filters, click **Reset filters** | All 12,668 players selected again |
-| Download | Explore the Data → Download | CSV of the filtered players |
-| Charts | Hover any bar | Tooltip shows the value and the number of players |
-
----
-
-## 🎨 Design and Implementation Decisions
-
-- **One cleaning pipeline (`core/data.py`)** reproduces the notebook step by step, so results cannot drift apart. It was checked to give exactly the same 12,668 rows and values as the notebook's `clean_data.csv`.
-- **Percentages within groups, with counts shown.** Every rate shows *n*, and groups with fewer than 30 players are drawn in light grey, because 94% of players are male and some groups are tiny.
-- **Comparison charts ignore their own filter.** For example, the "by work status" chart uses every filter except Work status, so filtering never removes the groups being compared. The caption says when this happens.
-- **Findings are calculated, not typed in.** The Overview and Findings pages generate their sentences from the data (full dataset), and the analysis pages describe the filtered data.
-- **Plotly** gives tooltips and a built-in "download as PNG" button on every chart (camera icon).
-- **One colour meaning per concept:** coral = addicted, slate = not addicted, indigo for everything else.
+1. Go to [share.streamlit.io](https://share.streamlit.io) and sign in with GitHub.
+2. Click **Create app** → **Deploy a public app from GitHub**.
+3. Choose this repository (`EDA-Project`), branch `main`, and set **Main file path** to `app.py`.
+4. Click **Deploy**. Streamlit installs `requirements.txt` automatically and gives you a public link.
 
 ---
 
 ## ⚠️ Limitations
 
-- Addiction is defined by **hours only**; it also counts the 45 players who **earn a living from gaming**, even though it is their job.
+- I defined addiction as playing 40+ hours a week. This is only an estimate, not a medical diagnosis, because real gaming addiction is diagnosed by symptoms (like losing control or harming daily life), not by hours. It also counts the 45 players who earn a living from gaming as addicted, even though gaming is their job.
 - The sample is not balanced: **94% male**, 98% PC players, mostly recruited through Reddit, all **18+**.
-- `Hours` counts only the player's **main game**.
+- `Hours` counts only the player's **main game**, not all games.
+- The survey did not include game genres like horror, so I couldn't study game type.
 - The survey is **self-reported** and taken at one time point, so it shows **associations, not causes**.
 
-### Data notes (kept as in the notebook)
-- 11 players report a PhD while younger than 22, which is unlikely; they were kept to match the notebook.
-- The notebook's "before cleaning" addiction rate (11.33%) counts the 30 rows with missing hours as not addicted; excluding them gives 11.35%, so the conclusion does not change.
+### Data notes
+- 11 players report a PhD while younger than 22, which is unlikely; I kept them to stay consistent with the notebook.
+- The "before cleaning" addiction rate (11.33%) counts the 30 rows with missing hours as not addicted; excluding them gives 11.35%, so the conclusion does not change.
+
+---
+
+## 💡 What I Learned
+
+- Always check the original source of the data. The survey showed me that "None" in Degree was a real answer that pandas read as missing.
+- Missing values are not always random (like GADE), so I need to understand why they are missing before filling or dropping them.
+- A weak correlation does not mean there is no relationship. The difference only appeared at the extreme (40+ hours).
+- My result was different from what I expected: the reason for playing mattered more than the number of hours.
+
+## 🔭 Recommendations for Future Analysis
+
+- Use a real gaming addiction scale instead of hours only.
+- Collect more female, console and mobile players.
+- Compare different game genres (like horror vs competitive games).
 
 ---
 
