@@ -4,7 +4,7 @@
 
 ---
 
-## 📁 Project Structure
+##  Project Structure
 
 ```
 EDA-Project/
@@ -34,7 +34,7 @@ EDA-Project/
 
 ---
 
-## 📊 Dataset
+##  Dataset
 
 - **Name:** Online Gaming Anxiety Data ([Kaggle](https://www.kaggle.com/datasets/divyansh22/online-gaming-anxiety-data))
 - **Original data:** Sauter & Draschkow (2017), published on the [Open Science Framework](https://osf.io/vnbxk/)
@@ -49,7 +49,7 @@ EDA-Project/
 
 ---
 
-## ❓ Questions
+##  Questions
 
 1. Which age groups have the highest addiction rate, and does it differ by gender?
 2. Does the addiction rate differ by work status and education level?
@@ -60,7 +60,7 @@ EDA-Project/
 
 ---
 
-## 📝 Using the Original Survey in My Analysis
+##  Using the Original Survey in My Analysis
 
 The column descriptions on Kaggle were not always clear, so I used the original survey questionnaire ([GamingStudy_Survey](GamingStudy_Survey.pdf)) to understand what each column really measures. This helped me find three things that changed my cleaning decisions:
 
@@ -70,7 +70,7 @@ The column descriptions on Kaggle were not always clear, so I used the original 
 
 ---
 
-## 🔍 Key Findings
+##  Key Findings
 
 - About **11%** of players play 40+ hours per week.
 - The most addicted group is **young males (18–20)**, and addiction goes down with age.
@@ -81,13 +81,13 @@ The column descriptions on Kaggle were not always clear, so I used the original 
 
 My result was different from what I expected: the **reason for playing** and **who you play with** mattered more than the **number of hours**.
 
-## ✅ Checking My Results Against Published Research
+##  Checking My Results Against Published Research
 
 My analysis showed that gaming **hours** have only a **weak** relationship with mental health, while the **reason for playing** and **playstyle** showed clearer differences. After finishing my analysis, I searched for research using the same survey and found a peer-reviewed paper by the researcher who collected the data, based on the same 13,464 players (Sauter, Braun & Mack, 2021). According to its abstract, time played is a poor predictor of mental health, while social context and gaming motives predict it better. This matches my findings.
 
 ---
 
-## 🚀 Run the Dashboard Locally
+##  Run the Dashboard Locally
 
 1. Install **Python 3.10 or newer** from [python.org](https://www.python.org/downloads/) (tick *Add python.exe to PATH* on Windows).
 2. Open a terminal **inside the project folder**.
@@ -108,16 +108,7 @@ The app reads the **raw** file `data/GamingStudy_data.csv` and applies the noteb
 
 ---
 
-## ☁️ Deploy to Streamlit Community Cloud
-
-1. Go to [share.streamlit.io](https://share.streamlit.io) and sign in with GitHub.
-2. Click **Create app** → **Deploy a public app from GitHub**.
-3. Choose this repository (`EDA-Project`), branch `main`, and set **Main file path** to `app.py`.
-4. Click **Deploy**. Streamlit installs `requirements.txt` automatically and gives you a public link.
-
----
-
-## ⚠️ Limitations
+##  Limitations
 
 - I defined addiction as playing 40+ hours a week. This is only an estimate, not a medical diagnosis, because real gaming addiction is diagnosed by symptoms (like losing control or harming daily life), not by hours. It also counts the 45 players who earn a living from gaming as addicted, even though gaming is their job.
 - The sample is not balanced: **94% male**, 98% PC players, mostly recruited through Reddit, all **18+**.
@@ -131,14 +122,14 @@ The app reads the **raw** file `data/GamingStudy_data.csv` and applies the noteb
 
 ---
 
-## 💡 What I Learned
+##  What I Learned
 
 - Always check the original source of the data. The survey showed me that "None" in Degree was a real answer that pandas read as missing.
 - Missing values are not always random (like GADE), so I need to understand why they are missing before filling or dropping them.
 - A weak correlation does not mean there is no relationship. The difference only appeared at the extreme (40+ hours).
 - My result was different from what I expected: the reason for playing mattered more than the number of hours.
 
-## 🔭 Recommendations for Future Analysis
+##  Recommendations for Future Analysis
 
 - Use a real gaming addiction scale instead of hours only.
 - Collect more female, console and mobile players.
@@ -146,7 +137,7 @@ The app reads the **raw** file `data/GamingStudy_data.csv` and applies the noteb
 
 ---
 
-## 📚 References
+##  References
 
 - Sauter, M., & Draschkow, D. (2017). *Are gamers sad and isolated? A database about the anxiety, life satisfaction and social phobia of over 13000 participants.* PsyArXiv. https://doi.org/10.31234/osf.io/mfajz
 - Sauter, M., Braun, T., & Mack, W. (2021). *Social context and gaming motives predict mental health better than time played.* Cyberpsychology, Behavior, and Social Networking, 24(2), 94–100. https://doi.org/10.1089/cyber.2020.0234
